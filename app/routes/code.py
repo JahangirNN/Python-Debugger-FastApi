@@ -1,4 +1,6 @@
 from fastapi import APIRouter, HTTPException, Body
+import random
+
 
 router = APIRouter()
 
@@ -72,6 +74,8 @@ def get_code(id: int):
         for code in temp_code:
             if code["id"] == id:
                 return code
+            else:
+                return code[random.randint(1, 4)]
         raise HTTPException(status_code=404, detail=f"Code with ID {id} not found")
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid ID format")
