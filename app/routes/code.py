@@ -54,18 +54,6 @@ temp_code = [
         ]
     },
     {
-        "id": 4,
-        "name": "Calculate Factorial",
-        "tags": [],
-        "code": "def factorial(n):\n    if n == 1:\n    return 1\n    else:\n        return n * factorial(n - 1)\n\nprint(factorial(5))",
-        "hint": "The code calculates the factorial of a number using recursion. Check the indentation of the return statement in the if condition.",
-        "test_cases": [
-            { "input": "factorial(5)", "expected": 120 },
-            { "input": "factorial(1)", "expected": 1 },
-            { "input": "factorial(3)", "expected": 6 },
-        ]
-    },
-    {
         "id": 5,
         "name": "Count Vowels in a String",
         "tags": [],
