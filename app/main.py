@@ -1,0 +1,26 @@
+from fastapi import FastAPI
+from app.routes import users, quiz, compiler_api, testCode, code
+from fastapi.middleware.cors import CORSMiddleware
+
+
+app = FastAPI(title="AI Python Learner Platform")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins, you can specify your Next.js URL instead of "*"
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
+
+
+# Include routes
+app.include_router(users.router, prefix="/users", tags=["Users"])
+app.include_router(quiz.router, prefix="/quiz", tags=["Quiz"])
+app.include_router(compiler_api.router, prefix="/compiler", tags=["Code Evaluation"])
+app.include_router(testCode.router, prefix="/test", tags=["Code"])
+app.include_router(code.router, prefix="/code", tags=["Code"])
+
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the AI Python Learner Platform!"}
