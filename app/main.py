@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import users, quiz, compiler_api, testCode, code
+from app.routes import users, compiler_api, testCode, code
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -16,7 +16,7 @@ app.add_middleware(
 
 # Include routes
 app.include_router(users.router, prefix="/users", tags=["Users"])
-app.include_router(quiz.router, prefix="/quiz", tags=["Quiz"])
+# app.include_router(quiz.router, prefix="/quiz", tags=["Quiz"])
 app.include_router(compiler_api.router, prefix="/compiler", tags=["Code Evaluation"])
 app.include_router(testCode.router, prefix="/test", tags=["Code"])
 app.include_router(code.router, prefix="/code", tags=["Code"])
