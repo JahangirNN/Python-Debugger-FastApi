@@ -1,9 +1,15 @@
 from fastapi import FastAPI
 from app.routes import users, compiler_api, testCode, code
 from fastapi.middleware.cors import CORSMiddleware
-
+import os
+import uvicorn
 
 app = FastAPI(title="AI Python Learner Platform")
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
 
 app.add_middleware(
     CORSMiddleware,
