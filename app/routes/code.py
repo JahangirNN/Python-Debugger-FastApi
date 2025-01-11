@@ -135,11 +135,18 @@ def get_code(id: int):
         for code in temp_code:
             if code["id"] == id:
                 return code
-            else:
-                return code[random.randint(1, 4)]
+        
+        # Randomly select a code if the specific ID is not found
+        if temp_code:  # Ensure the list is not empty
+            return random.choice(temp_code)  # Choose a random dictionary from the list
+        
+        # If no match and the list is empty, raise an exception
         raise HTTPException(status_code=404, detail=f"Code with ID {id} not found")
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid ID format")
+    
+    except Exception as e:
+        # Handle unexpected errors (e.g., temp_code not defined or not iterable)
+        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
+
 
 
 
