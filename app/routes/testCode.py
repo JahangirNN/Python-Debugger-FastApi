@@ -16,30 +16,31 @@ class TestRequest(BaseModel):
     test_cases: List[TestCase]
 
 # Helper function to execute code and capture output
+# Helper function to execute code and capture output
+# Helper function to execute code and capture output
 def execute_code(code: str, test_cases: List[TestCase]) -> Dict[str, Any]:
-    local_vars = {}
+    # Shared namespace for exec and eval
+    namespace = {}
     try:
-        # Execute the user-provided code to define the function
-        exec(code, {}, local_vars)
+        # Execute the user-provided code
+        exec(code, namespace)
     except Exception as e:
         return {"error": f"Error executing code: {str(e)}"}
 
-    # Check if we have a function in local_vars
-    function_name = next(iter(local_vars), None)
-    if function_name is None or not callable(local_vars[function_name]):
+    # Verify the presence of callable functions
+    function_names = [name for name, obj in namespace.items() if callable(obj)]
+    if not function_names:
         return {"error": "No callable function found in the provided code."}
 
-    func = local_vars[function_name]
-    
     results = []
-    
+
     for idx, test_case in enumerate(test_cases):
         input_str = test_case.input
         expected_result = test_case.expected
 
         try:
-            # Use eval to evaluate the input and call the function dynamically
-            result = eval(input_str, {}, local_vars)
+            # Evaluate the input within the shared namespace
+            result = eval(input_str, namespace)
             if result == expected_result:
                 results.append({
                     "test_case": idx + 1,
@@ -59,7 +60,7 @@ def execute_code(code: str, test_cases: List[TestCase]) -> Dict[str, Any]:
                 "status": "Error",
                 "message": str(e)
             })
-    
+
     return {"results": results}
 
 # POST endpoint to test Python code

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import users, compiler_api, testCode, code
+from app.routes import users, compiler_api, testCode, code, runCode
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import uvicorn
@@ -26,6 +26,7 @@ app.include_router(users.router, prefix="/users", tags=["Users"])
 app.include_router(compiler_api.router, prefix="/compiler", tags=["Code Evaluation"])
 app.include_router(testCode.router, prefix="/test", tags=["Code"])
 app.include_router(code.router, prefix="/code", tags=["Code"])
+app.include_router(runCode.router, prefix="/run", tags=["Run"])
 
 @app.get("/")
 async def root():
